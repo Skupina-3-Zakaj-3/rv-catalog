@@ -1,6 +1,6 @@
 package si.fri.rso.skupina3.lib;
 
-public class RV {
+public class Rv {
 
     private Integer rv_id;
     private Integer user_id;

@@ -1,15 +1,36 @@
-package si.fri.rso.skupina3.lib;
+package si.fri.rso.skupina3.rv_catalog.models.entities;
 
+import javax.persistence.*;
 import java.util.Date;
 
-public class RV_review {
+@Entity
+@Table(name = "rv_reviews")
+@NamedQueries(value =
+        {
+                @NamedQuery(name = "RvReviewEntity.getAll",
+                        query = "SELECT review FROM RvReviewEntity review")
+        })
+public class RvReviewEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer rv_review_id;
-    private String comment;
-    private Float score;
+
+    @Column(name = "user_id")
     private Integer user_id;
+
+    @Column(name = "comment")
+    private String comment;
+
+    @Column(name = "score")
+    private Float score;
+
+    @Column(name = "rv_id")
     private Integer rv_id;
+
+    @Column(name = "review_date")
     private Date review_date;
+
 
     public Integer getRv_review_id() {
         return rv_review_id;
@@ -17,6 +38,14 @@ public class RV_review {
 
     public void setRv_review_id(Integer rv_review_id) {
         this.rv_review_id = rv_review_id;
+    }
+
+    public Integer getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 
     public String getComment() {
@@ -33,14 +62,6 @@ public class RV_review {
 
     public void setScore(Float score) {
         this.score = score;
-    }
-
-    public Integer getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
     }
 
     public Integer getRv_id() {
