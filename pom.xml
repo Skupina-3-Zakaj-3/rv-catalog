@@ -52,22 +52,22 @@
 
             <dependency>
                 <groupId>si.fri.rso.skupina3</groupId>
-                <artifactId>api</artifactId>
+                <artifactId>rv-catalog-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>si.fri.rso.skupina3</groupId>
-                <artifactId>models</artifactId>
+                <artifactId>rv-catalog-models</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>si.fri.rso.skupina3</groupId>
-                <artifactId>services</artifactId>
+                <artifactId>rv-catalog-services</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>si.fri.rso.skupina3</groupId>
-                <artifactId>lib</artifactId>
+                <artifactId>rv-catalog-lib</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
