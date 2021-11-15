@@ -28,7 +28,7 @@
 
         <dependency>
             <groupId>si.fri.rso.skupina3</groupId>
-            <artifactId>services</artifactId>
+            <artifactId>rv-catalog-services</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
