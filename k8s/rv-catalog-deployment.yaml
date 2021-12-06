@@ -13,7 +13,7 @@ spec:
         app: rv-catalog
     spec:
       containers:
-        - image: anzeha/rv-catalog:latest
+        - image: anzeha/rv-catalog
           name: rv-catalog
           env:
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
