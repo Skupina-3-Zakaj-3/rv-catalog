@@ -14,11 +14,9 @@ kumuluzee:
       password: postgres
   health:
     checks:
-      #data-source-health-check:
-      #  type: liveness
-      #  jndi-name: jdbc/RvDS
-      disk-space-health-check:
-        threshold: 100000000
+      data-source-health-check:
+        type: liveness
+        jndi-name: jdbc/RvDS
   metrics:
     web-instrumentation:
       - name: rvs-endpoint
