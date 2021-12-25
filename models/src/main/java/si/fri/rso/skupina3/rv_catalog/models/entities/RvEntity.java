@@ -7,7 +7,7 @@ import javax.persistence.*;
 @NamedQueries(value =
         {
                 @NamedQuery(name = "RvEntity.getAll",
-                        query = "SELECT rv FROM RvEntity rv")
+                        query = "SELECT rv FROM RvEntity rv"),
         })
 public class RvEntity {
 

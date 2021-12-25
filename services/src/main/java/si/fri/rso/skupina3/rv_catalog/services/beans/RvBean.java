@@ -1,5 +1,7 @@
 package si.fri.rso.skupina3.rv_catalog.services.beans;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.rso.skupina3.lib.Rv;
 import si.fri.rso.skupina3.rv_catalog.models.converters.RvConverter;
 import si.fri.rso.skupina3.rv_catalog.models.entities.RvEntity;
@@ -7,7 +9,8 @@ import si.fri.rso.skupina3.rv_catalog.models.entities.RvEntity;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.core.UriInfo;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -15,19 +18,110 @@ import java.util.stream.Collectors;
 @RequestScoped
 public class RvBean {
 
-    private Logger log = Logger.getLogger(RvBean.class.getName());
+    private final Logger log = Logger.getLogger(RvBean.class.getName());
 
     @Inject
     private EntityManager em;
 
-    public List<Rv> getRv() {
+    public List<Rv> getRvs(UriInfo uriInfo) {
 
-        TypedQuery<RvEntity> query = em.createNamedQuery(
-                "RvEntity.getAll", RvEntity.class);
+        QueryParameters queryParameters = QueryParameters.query(uriInfo.getRequestUri().getQuery()).defaultOffset(0)
+                .build();
 
-        List<RvEntity> resultList = query.getResultList();
+        return JPAUtils.queryEntities(em, RvEntity.class, queryParameters).stream()
+                .map(RvConverter::toDto).collect(Collectors.toList());
 
-        return resultList.stream().map(RvConverter::toDto).collect(Collectors.toList());
+    }
 
+    public Rv getRv(Integer rvId) {
+        RvEntity rvEntity = em.find(RvEntity.class, rvId);
+
+        if (rvEntity == null) {
+            throw new NotFoundException();
+        }
+
+        return RvConverter.toDto(rvEntity);
+    }
+
+    public Rv createRv(Rv rv) {
+
+        RvEntity rvEntity = RvConverter.toEntity(rv);
+
+        try {
+            beginTx();
+            em.persist(rvEntity);
+            commitTx();
+        }
+        catch (Exception e) {
+            rollbackTx();
+        }
+
+        if (rvEntity.getRv_id() == null) {
+            throw new RuntimeException("Entity was not persisted");
+        }
+
+        return RvConverter.toDto(rvEntity);
+    }
+
+    public Rv updateRv(Integer rvId, Rv rv) {
+
+        RvEntity rvEntity = em.find(RvEntity.class, rvId);
+
+        if (rvEntity == null) {
+            return null;
+        }
+
+        RvEntity updatedRvEntity = RvConverter.toEntity(rv);
+
+        try {
+            beginTx();
+            updatedRvEntity.setRv_id(rv.getRv_id());
+            em.merge(updatedRvEntity);
+            commitTx();
+        }
+        catch (Exception e) {
+            rollbackTx();
+        }
+
+        return RvConverter.toDto(updatedRvEntity);
+    }
+
+    public boolean deleteRv(Integer rvId) {
+
+        RvEntity rvEntity = em.find(RvEntity.class, rvId);
+
+        if (rvEntity != null) {
+            try {
+                beginTx();
+                em.remove(rvEntity);
+                commitTx();
+            }
+            catch (Exception e) {
+                rollbackTx();
+            }
+        }
+        else {
+            return false;
+        }
+
+        return true;
+    }
+
+    private void beginTx() {
+        if (!em.getTransaction().isActive()) {
+            em.getTransaction().begin();
+        }
+    }
+
+    private void commitTx() {
+        if (em.getTransaction().isActive()) {
+            em.getTransaction().commit();
+        }
+    }
+
+    private void rollbackTx() {
+        if (em.getTransaction().isActive()) {
+            em.getTransaction().rollback();
+        }
     }
 }
