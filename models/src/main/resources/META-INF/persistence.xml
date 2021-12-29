@@ -4,7 +4,6 @@
         <non-jta-data-source>jdbc/RvDS</non-jta-data-source>
 
         <class>si.fri.rso.skupina3.rv_catalog.models.entities.RvEntity</class>
-        <class>si.fri.rso.skupina3.rv_catalog.models.entities.RvReviewEntity</class>
         <class>si.fri.rso.skupina3.rv_catalog.models.converters.InstantAtributeConverter</class>
 
         <properties>
