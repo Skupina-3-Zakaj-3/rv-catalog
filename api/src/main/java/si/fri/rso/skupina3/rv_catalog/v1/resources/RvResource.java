@@ -1,5 +1,6 @@
 package si.fri.rso.skupina3.rv_catalog.v1.resources;
 
+import org.json.JSONObject;
 import si.fri.rso.skupina3.lib.Rv;
 import si.fri.rso.skupina3.rv_catalog.services.beans.RvBean;
 
@@ -16,7 +17,7 @@ import java.util.logging.Logger;
 @ApplicationScoped
 @Path("/rvs")
 @Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
+@Consumes({MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
 public class RvResource {
 
     private Logger log = Logger.getLogger(RvResource.class.getName());
@@ -98,5 +99,20 @@ public class RvResource {
         else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
+    }
+
+    @PUT
+    @Path("{rvId}/rating")
+    public Response updateRating(@PathParam("rvId") Integer rvId, String score) {
+
+        log.info("updateRating() - PUT");
+        Rv rv = rvBean.updateRvRating(rvId, Integer.parseInt(score));
+
+        if (rv == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        return Response.status(Response.Status.OK).entity(rv).build();
+
     }
 }

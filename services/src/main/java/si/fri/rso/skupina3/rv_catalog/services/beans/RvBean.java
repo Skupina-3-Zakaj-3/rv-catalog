@@ -45,10 +45,13 @@ public class RvBean {
 
     public Rv createRv(Rv rv) {
 
+        rv.setRating(0.0f);
+        rv.setNum_of_reviews(0);
         RvEntity rvEntity = RvConverter.toEntity(rv);
 
         try {
             beginTx();
+            rvEntity.setNum_of_reviews(0);
             em.persist(rvEntity);
             commitTx();
         }
@@ -105,6 +108,30 @@ public class RvBean {
         }
 
         return true;
+    }
+
+    public Rv updateRvRating(Integer rvId, Integer newScore) {
+
+        RvEntity rvEntity = em.find(RvEntity.class, rvId);
+
+        if (rvEntity == null) {
+            return null;
+        }
+
+        Float newRating = (rvEntity.getRating() * rvEntity.getNum_of_reviews() + newScore) / (rvEntity.getNum_of_reviews() + 1);
+
+        try {
+            beginTx();
+            rvEntity.setNum_of_reviews(rvEntity.getNum_of_reviews() + 1);
+            rvEntity.setRating(newRating);
+            em.merge(rvEntity);
+            commitTx();
+        }
+        catch (Exception e) {
+            rollbackTx();
+        }
+
+        return RvConverter.toDto(rvEntity);
     }
 
     private void beginTx() {

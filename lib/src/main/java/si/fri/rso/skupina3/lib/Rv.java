@@ -10,6 +10,7 @@ public class Rv {
     private String description;
     private Float rating;
     private Float cost_per_day;
+    private Integer num_of_reviews;
 
     public Integer getRv_id() {
         return rv_id;
@@ -73,5 +74,13 @@ public class Rv {
 
     public void setCost_per_day(Float cost_per_day) {
         this.cost_per_day = cost_per_day;
+    }
+
+    public Integer getNum_of_reviews() {
+        return num_of_reviews;
+    }
+
+    public void setNum_of_reviews(Integer num_of_reviews) {
+        this.num_of_reviews = num_of_reviews;
     }
 }

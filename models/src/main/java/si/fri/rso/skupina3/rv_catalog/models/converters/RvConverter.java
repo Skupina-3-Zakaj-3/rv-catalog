@@ -16,6 +16,7 @@ public class RvConverter {
         dto.setDescription(entity.getDescription());
         dto.setRating(entity.getRating());
         dto.setCost_per_day(entity.getCost_per_day());
+        dto.setNum_of_reviews(entity.getNum_of_reviews());
 
         return dto;
     }
@@ -30,6 +31,7 @@ public class RvConverter {
         entity.setDescription(dto.getDescription());
         entity.setRating(dto.getRating());
         entity.setCost_per_day(dto.getCost_per_day());
+        entity.setNum_of_reviews(dto.getNum_of_reviews());
 
         return entity;
 
