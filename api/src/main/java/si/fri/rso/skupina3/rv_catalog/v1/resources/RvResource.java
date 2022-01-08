@@ -1,6 +1,6 @@
 package si.fri.rso.skupina3.rv_catalog.v1.resources;
 
-import com.kumuluz.ee.cors.annotations.CrossOrigin;
+import com.kumuluz.ee.logs.cdi.Log;
 import org.json.JSONObject;
 import si.fri.rso.skupina3.lib.Rv;
 import si.fri.rso.skupina3.rv_catalog.services.beans.RvBean;
@@ -15,11 +15,11 @@ import javax.ws.rs.core.UriInfo;
 import java.util.List;
 import java.util.logging.Logger;
 
+@Log
 @ApplicationScoped
 @Path("/rvs")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes({MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
-@CrossOrigin(supportedMethods = "GET, POST, HEAD, DELETE, OPTIONS")
 public class RvResource {
 
     private Logger log = Logger.getLogger(RvResource.class.getName());
