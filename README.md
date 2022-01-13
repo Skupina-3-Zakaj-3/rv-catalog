@@ -20,7 +20,7 @@ docker run -d --name pg-rv-catalog --network="rso" -e POSTGRES_USER=dbuser -e PO
 ## Run the container in network
 
 ```bash
-docker run -p 8081:8081 --name rv-catalog --network="rso" -e KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://pg-rv-catalog:5432/rvs rv-catalog
+docker run -d -p 8081:8081 --name rv-catalog --network="rso" -e KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://pg-rv-catalog:5432/rvs rv-catalog
 ```
 
 ## Run the container from Docker hub in network
